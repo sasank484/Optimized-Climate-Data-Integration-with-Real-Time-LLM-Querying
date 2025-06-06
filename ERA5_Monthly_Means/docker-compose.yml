@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./south_asia_monthly_new.db:/app/south_asia_monthly_new.db
+    environment:
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true

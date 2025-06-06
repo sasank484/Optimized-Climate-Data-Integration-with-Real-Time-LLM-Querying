@@ -1,0 +1,15 @@
+# HTTP Requests library
+requests
+
+# Natural Language Processing library
+spacy[en_core_web_sm]
+
+# US States library
+us
+
+# Date parsing library
+dateparser
+
+# MCP library (assuming this is a custom package or from a specific source)
+mcp
+

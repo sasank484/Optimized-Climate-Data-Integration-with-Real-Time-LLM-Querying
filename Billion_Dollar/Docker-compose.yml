@@ -1,0 +1,34 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  disaster-server:
+    build: .
+    container_name: disaster-server
+    ports:
+      - "5000:5000"  # Adjust port as needed
+    volumes:
+      - ./:/app
+    command: ["python", "server.py"]
+    restart: unless-stopped
+    environment:
+      - DB_PATH=/app/disaster_data.db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sqlite3; conn = sqlite3.connect('/app/disaster_data.db'); print('Database connection successful!'); conn.close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  disaster-client:
+    build: .
+    container_name: disaster-client
+    depends_on:
+      disaster-server:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    command: ["python", "new_disaster_c.py"]
+    restart: "no"
+    environment:
+      - SERVER_HOST=disaster-server
